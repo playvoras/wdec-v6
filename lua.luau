@@ -29,6 +29,12 @@ Updated BuiltIns
 ]]
 
 ---
+game_httpget = function(s)
+	return game.HttpService:GetAsync(s)
+end
+local httpget = httpget or game_httpget or http_get -- add your httpget func here
+local InspectUrl = "https://raw.githubusercontent.com/kikito/inspect.lua/refs/heads/master/inspect.lua"
+local inspect = loadstring(httpget(InspectUrl))()
 
 local fmt = string.format -- string.format is annoying to write
 local getscriptbytecode = getscriptbytecode
@@ -38,7 +44,7 @@ type luau_op = {
 	name: string,
 	aux: boolean
 }
---I removed DEP_FORGLOOP_INEXT, DEP_JUMPIFEQKa and DEP_JUMPIFNOTEQK (deprecated)
+--I removed DEP_FORGLOOP_INEXT, DEP_JUMPIFEQK and DEP_JUMPIFNOTEQK (deprecated)
 local opcodes: { luau_op } = { -- Opcode table. Every opcode is ordered as their Opcode number (not Roblox encoded)
 	{name = "NOP", aux = false},
 	{name = "BREAK", aux = false},
@@ -261,10 +267,20 @@ local function deserialize(s_bytes: string, is_roblox: boolean): luau_bytecode?
 	for i = 1, strings_sz do -- Luau stores strings as a massive array before all the actual code, so we must first read them all. At some point I plan to inline the strings into custom opcodes to reduce code complexity
 		string_table[i] = GetString()
 	end
-	print(string_table)
+	print(inspect(string_table))
+	local _userdata_types = {}
+	while true do
+		local index = GetByte()
+		if index == 0 then
+			break
+		end
+		local _name_ref = GetVarInt()
+		_userdata_types[index] = _name_ref
+	end
 	local protos: { luau_proto } = {}
 	local protos_sz = GetVarInt()
-	for _ = 1, protos_sz do -- Iterate over every proto, including main.
+	for i = 1, protos_sz do -- Iterate over every proto, including main.
+		local proto_id = i
 		local maxstacksize: number = GetByte()
 		local numparams: number = GetByte()
 		local numupvalues: number = GetByte()
@@ -398,7 +414,7 @@ local function deserialize(s_bytes: string, is_roblox: boolean): luau_bytecode?
 			types = types
 		}
 
-		table.insert(protos, proto)
+		protos[proto_id] = proto
 
 		--[[local _debug_haslines: boolean = GetByte() ~= 0
 		if _debug_haslines then
@@ -410,10 +426,10 @@ local function deserialize(s_bytes: string, is_roblox: boolean): luau_bytecode?
 				GetInt()
 			end
 		end--]]
-		
+
 		local _debug_lineinfoenabled = GetByte() ~= 0
 		local i_lineinfo = nil
-		
+
 		if _debug_lineinfoenabled then
 			local linegaplog2 = GetByte()
 			local intervals = bit32.rshift((instructions_sz - 1), linegaplog2) + 1
@@ -434,7 +450,7 @@ local function deserialize(s_bytes: string, is_roblox: boolean): luau_bytecode?
 				table.insert(instruction_line_info, abslineinfo[bit32.rshift(i - 1, linegaplog2) + 1] + lineinfo[i])
 			end
 		end
-		
+
 		local _debug_hasdebug = GetByte() ~= 0
 		if _debug_hasdebug then
 			for _ = 1, GetVarInt() do -- Locals
@@ -455,6 +471,7 @@ local function deserialize(s_bytes: string, is_roblox: boolean): luau_bytecode?
 		protos = protos,
 		main_proto_id = GetVarInt()
 	}
+	print(inspect(bytecode))
 	return bytecode
 end
 
@@ -889,6 +906,7 @@ local function ConvertBuiltin(id: number): GlobalNode | TableIndexNode
 end
 
 local function wdec_decompile(bytecode: luau_bytecode): string
+	local start_time = tick()
 	local function ReAssigns(instruction: luau_instruction, target: number): boolean -- Function to check if target register `target` is written to by `instruction`
 		if not table.find({ -- Below is a list of instructions which can possibly write to a register
 			-- TODO: finish this list; it fucks up shit if it isn't
@@ -3153,8 +3171,8 @@ local function wdec_decompile(bytecode: luau_bytecode): string
 
 	local ast: ClosureNode = DecompileClosure(main_closure)
 	local source: string = TranspileClosure(ast, 0)
-
-	return string.sub(source, 1, string.len(source) - 1)
+	local endTime = tick()
+	return string.sub(source, 1, string.len(source) - 1), endTime - start_time
 end
 
 local base64 = (function()
@@ -3212,19 +3230,21 @@ else
 end
 ]]
 function decompile(script: LocalScript | ModuleScript)
-	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)'
+	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)\n'
 	local _, bytecode = pcall(getscriptbytecode, script)
 	assert(_, 'Failed to retrieve bytecode from script: ' .. script.Name .. '\n\n Cause: ' .. bytecode)
 	local _, deserialized = pcall(deserialize, bytecode, true)
-	local _, result = pcall(wdec_decompile, deserialized)
-	return CreditHeader .. result
+	local result, timeTaken = wdec_decompile(deserialized)
+	return CreditHeader .. "--Time Taken: " .. timeTaken .. "\n" .. result
 end
 local env = (getgenv and getgenv()) or (getfenv and getfenv()) or shared or _G
 env.decompile = decompile
---[[function bytecode_decompile(bytecode)
-	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)\n\n'
+function bytecode_decompile(bytecode)
+	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)\n'
 	--//assert(_, 'Failed to retrieve bytecode from script: ' .. script .. '\n\n Cause: ' .. bytecode)
 	local _, deserialized = pcall(deserialize, bytecode, false)
-	local _, result = pcall(wdec_decompile, deserialized)
-	return CreditHeader .. result
-end--]]
+	local result, timeTaken = wdec_decompile(deserialized)
+	return CreditHeader .. "--Time Taken: " .. timeTaken .. "\n" .. result
+end
+local LuauCeption = loadstring(game.HttpService:GetAsync("https://github.com/RealEthanPlayzDev/LuauCeption/releases/download/0.645/Luau.LuauCeption.Compiler.0.645.luau", true))() -- Bytecode Compiler
+--Usage: bytecode_decompile(LuauCeption.luau_compile())
