@@ -22,6 +22,12 @@
 
 --- woffle if you want it taken down (for some reason) lmk
 
+--[[
+CHANGELOG:
+Updated Oplist,
+Updated BuiltIns
+]]
+
 ---
 
 local fmt = string.format -- string.format is annoying to write
@@ -32,7 +38,7 @@ type luau_op = {
 	name: string,
 	aux: boolean
 }
-
+--I removed DEP_FORGLOOP_INEXT, DEP_JUMPIFEQKa and DEP_JUMPIFNOTEQK (deprecated)
 local opcodes: { luau_op } = { -- Opcode table. Every opcode is ordered as their Opcode number (not Roblox encoded)
 	{name = "NOP", aux = false},
 	{name = "BREAK", aux = false},
@@ -94,7 +100,8 @@ local opcodes: { luau_op } = { -- Opcode table. Every opcode is ordered as their
 	{name = "FORNLOOP", aux = false},
 	{name = "FORGLOOP", aux = true},
 	{name = "FORGPREP_INEXT", aux = false},
-	{name = "DEP_FORGLOOP_INEXT", aux = false},
+	--{name = "DEP_FORGLOOP_INEXT", aux = false}, -- Deprecated, removed in Bytecode Version 3
+	{name = "FASTCALL3", aux = true},
 	{name = "FORGPREP_NEXT", aux = false},
 	{name = "NATIVECALL", aux = false},
 	{name = "GETVARARGS", aux = false},
@@ -105,8 +112,10 @@ local opcodes: { luau_op } = { -- Opcode table. Every opcode is ordered as their
 	{name = "FASTCALL", aux = false},
 	{name = "COVERAGE", aux = false},
 	{name = "CAPTURE", aux = false},
-	{name = "DEP_JUMPIFEQK", aux = false},
-	{name = "DEP_JUMPIFNOTEQK", aux = false},
+	--{name = "DEP_JUMPIFEQK", aux = false}, -- Deprecated
+	--{name = "DEP_JUMPIFNOTEQK", aux = false}, -- Deprecated
+	{name = "SUBRK", aux = false},
+	{name = "DIVRK", aux = false},
 	{name = "FASTCALL1", aux = false},
 	{name = "FASTCALL2", aux = true},
 	{name = "FASTCALL2K", aux = true},
@@ -117,6 +126,7 @@ local opcodes: { luau_op } = { -- Opcode table. Every opcode is ordered as their
 	{name = "JUMPXEQKS", aux = true},
 	{name = "IDIV", aux = false},
 	{name = "IDIVK", aux = false},
+	--{name = "_COUNT", aux = false} -- not a valid opcode by itself
 }
 
 local function GetOp(opcode: number): luau_op
@@ -840,6 +850,21 @@ local builtins: { BuiltInFunction } = { -- ORDER SENSITIVE
 
 	{ Path = { "tonumber" }},
 	{ Path = { "tostring" }},
+	-- bit32.byteswap(n)
+	{ Path = { "bit32", "byteswap" }},
+	-- buffer
+	{ Path = { "buffer", "readi8" }},
+	{ Path = { "buffer", "readu8" }},
+	{ Path = { "buffer", "writeu8" }},
+	{ Path = { "buffer", "readi16" }},
+	{ Path = { "buffer", "readu16" }},
+	{ Path = { "buffer", "writeu16" }},
+	{ Path = { "buffer", "readi32" }},
+	{ Path = { "buffer", "readu32" }},
+	{ Path = { "buffer", "writeu32" }},
+	{ Path = { "buffer", "readf32" }},
+	{ Path = { "buffer", "writef64" }},
+	{ Path = { "buffer", "readf64" }},
 }
 
 local function ConvertBuiltin(id: number): GlobalNode | TableIndexNode
@@ -2816,6 +2841,7 @@ local function wdec_decompile(bytecode: luau_bytecode): string
 						cons ..= ", "
 					end
 				end
+				print('INLI AAAA')
 				return cons .. ")"
 			end
 			return fmt("nil --[[ Unhandled type: %s ]]", value.Type)
@@ -2891,6 +2917,8 @@ local function wdec_decompile(bytecode: luau_bytecode): string
 				if node.Target.Type == "ClosureNode" then
 					cons = "("
 				end
+				print('INLI AAAA btw at the functi0n call l2892')
+				print(node)
 				local target = TranspileValue(node.Target, depth)
 				if #node.RetVals > 0 then
 					cons ..= "local "
