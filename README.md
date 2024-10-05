@@ -30,4 +30,4 @@ There are multiple flaws with this decompiler:
 # Credits
 
 @luavm: Writing the Decompiler (SirHurt/AssHurt)
-@luaubc: Updating the Decompilr to v6
+@luaubc: Updating the Decompiler to v6
