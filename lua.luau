@@ -2816,7 +2816,6 @@ local function wdec_decompile(bytecode: luau_bytecode): string
 						cons ..= ", "
 					end
 				end
-				print('INLI AAAA')
 				return cons .. ")"
 			end
 			return fmt("nil --[[ Unhandled type: %s ]]", value.Type)
@@ -2892,8 +2891,6 @@ local function wdec_decompile(bytecode: luau_bytecode): string
 				if node.Target.Type == "ClosureNode" then
 					cons = "("
 				end
-				print('INLI AAAA btw at the functi0n call l2892')
-				print(node)
 				local target = TranspileValue(node.Target, depth)
 				if #node.RetVals > 0 then
 					cons ..= "local "
