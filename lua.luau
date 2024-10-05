@@ -2816,6 +2816,7 @@ local function wdec_decompile(bytecode: luau_bytecode): string
 						cons ..= ", "
 					end
 				end
+				print('INLI AAAA')
 				return cons .. ")"
 			end
 			return fmt("nil --[[ Unhandled type: %s ]]", value.Type)
@@ -2888,6 +2889,11 @@ local function wdec_decompile(bytecode: luau_bytecode): string
 				return Indent(depth) .. fmt("%s = %s", node.Target.Id, TranspileValue(node.Value, depth))
 			elseif node.Type == "FunctionCallNode" then
 				local cons: string = ""
+				if node.Target.Type == "ClosureNode" then
+					cons = "("
+				end
+				print('INLI AAAA btw at the functi0n call l2892')
+				print(node)
 				local target = TranspileValue(node.Target, depth)
 				if #node.RetVals > 0 then
 					cons ..= "local "
@@ -2931,7 +2937,7 @@ local function wdec_decompile(bytecode: luau_bytecode): string
 					end
 					cons ..= " = "
 				end
-				cons ..= target .. "("
+				cons ..= target .. if node.Target.Type == "ClosureNode" then ")" .. "(" else "" .. "("
 				for i, arg in next, node.Args do
 					cons ..= TranspileValue(arg, depth)
 					if i < #node.Args then
@@ -3180,7 +3186,6 @@ else
 	end}
 end
 ]]
-
 function decompile(script: LocalScript | ModuleScript)
 	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)'
 	local _, bytecode = pcall(getscriptbytecode, script)
@@ -3192,3 +3197,10 @@ function decompile(script: LocalScript | ModuleScript)
 end
 local env = (getgenv and getgenv()) or (getfenv and getfenv()) or shared or _G
 env.decompile = decompile
+--[[function bytecode_decompile(bytecode)
+	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)\n\n'
+	--//assert(_, 'Failed to retrieve bytecode from script: ' .. script .. '\n\n Cause: ' .. bytecode)
+	local _, deserialized = pcall(deserialize, bytecode, false)
+	local _, result = pcall(wdec_decompile, deserialized)
+	return CreditHeader .. result
+end--]]
