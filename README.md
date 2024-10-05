@@ -27,9 +27,13 @@ There are multiple flaws with this decompiler:
 4. Deprecated Opcodes: This list includes Deprecated opcodes.
 5. BuiltIns are not complete, meaning not all functions can be retrieved.
 
+
 # Credits
 
 @luavm: Writing the Decompiler (SirHurt/AssHurt)
+
 @luaubc: Updating the Decompiler to v6
-Fiu: ReadVarInt Function and debu stuff
+
+Fiu: ReadVarInt Function and debug stuff
+
 Luau: Deserializer
