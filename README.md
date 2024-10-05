@@ -36,6 +36,8 @@ There are multiple flaws with this decompiler:
 
 5. Loops are also not present. (discovered: while .. do)
 
+6. Instead of having else or elseif, the decompiler registers it as another statement so TODO: add reasonable else amnd elseif
+
 
 # Credits
 
