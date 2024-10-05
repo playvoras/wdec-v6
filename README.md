@@ -1,4 +1,4 @@
-# wdec V6
+# wdec v6
 
 This is a Luau Bytecode Decompiler made by @luavm that decompiles luau bytecode to human-readable Source.
 
