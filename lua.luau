@@ -3190,3 +3190,5 @@ function decompile(script: LocalScript | ModuleScript)
 	local _, result = pcall(wdec_decompile, deserialized)
 	return CreditHeader .. result
 end
+local env = (getgenv and getgenv()) or (getfenv and getfenv()) or shared or _G
+env.decompile = decompile
