@@ -7,7 +7,7 @@ This is a Luau Bytecode Decompiler made by @luavm that decompiles luau bytecode 
 game_httpget = function(s)
   return game:HttpGet(s)
 end
-local httpget = httpget or game_httpget or http_get -- add your request func here
+local httpget = httpget or game_httpget or http_get -- add your httpget func here
 loadstring(httpget("https://raw.githubusercontent.com/Arch-Foundation/wdec-v6/refs/heads/main/lua.luau"))()
 decompile(script_path)
 ```
