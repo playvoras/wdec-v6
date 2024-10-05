@@ -26,6 +26,7 @@ There are multiple flaws with this decompiler:
 3. Unhandled Opcodes: Due to the Opcode list not being complete, the deserializer can't pick out an invalid table index, so the decompiler (deserializer) errors.
 4. Deprecated Opcodes: This list includes Deprecated opcodes.
 5. BuiltIns are not complete, meaning not all functions can be retrieved.
+6. Loops are also not present. (discovered: while .. do)
 
 
 # Credits
