@@ -31,3 +31,5 @@ There are multiple flaws with this decompiler:
 
 @luavm: Writing the Decompiler (SirHurt/AssHurt)
 @luaubc: Updating the Decompiler to v6
+Fiu: ReadVarInt Function and debu stuff
+Luau: Deserializer
