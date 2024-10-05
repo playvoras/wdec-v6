@@ -30,7 +30,7 @@ Updated BuiltIns
 
 ---
 game_httpget = function(s)
-	return game.HttpService:GetAsync(s)
+	return game:HttpGet(s)
 end
 local httpget = httpget or game_httpget or http_get -- add your httpget func here
 local InspectUrl = "https://raw.githubusercontent.com/kikito/inspect.lua/refs/heads/master/inspect.lua"
@@ -3246,5 +3246,5 @@ function bytecode_decompile(bytecode)
 	local result, timeTaken = wdec_decompile(deserialized)
 	return CreditHeader .. "--Time Taken: " .. timeTaken .. "\n" .. result
 end
-local LuauCeption = loadstring(game.HttpService:GetAsync("https://github.com/RealEthanPlayzDev/LuauCeption/releases/download/0.645/Luau.LuauCeption.Compiler.0.645.luau", true))() -- Bytecode Compiler
+--local LuauCeption = loadstring(game.HttpService:GetAsync("https://github.com/RealEthanPlayzDev/LuauCeption/releases/download/0.645/Luau.LuauCeption.Compiler.0.645.luau", true))() -- Bytecode Compiler
 --Usage: bytecode_decompile(LuauCeption.luau_compile())
