@@ -3216,7 +3216,6 @@ function decompile(script: LocalScript | ModuleScript)
 	local _, bytecode = pcall(getscriptbytecode, script)
 	assert(_, 'Failed to retrieve bytecode from script: ' .. script.Name .. '\n\n Cause: ' .. bytecode)
 	local _, deserialized = pcall(deserialize, bytecode, true)
-	assert(_, 'Failed to deserialize! Cause: ' .. deserialized)
 	local _, result = pcall(wdec_decompile, deserialized)
 	return CreditHeader .. result
 end
