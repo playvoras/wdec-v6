@@ -21,11 +21,12 @@ setclipboard(decompile(game.ReplicatedStorage.ExampleScript))
 
 # Flaws
 There are multiple flaws with this decompiler:
-1. The opcode list is not updated.
+~~1. The opcode list is not updated.~~
 2. AST is partially broken: Reason: not all opcodes are supported and some have even changed behaviour, meaning they need a fix.
-3. Unhandled Opcodes: Due to the Opcode list not being complete, the deserializer can't pick out an invalid table index, so the decompiler (deserializer) errors.
+~~3. Unhandled Opcodes: Due to the Opcode list not being complete, the deserializer can't pick out an invalid table index, so the decompiler (deserializer) errors.~~ Updated
+3. Some opcodes not handled: TODO: Handle all opcodes.
 4. Deprecated Opcodes: This list includes Deprecated opcodes.
-5. BuiltIns are not complete, meaning not all functions can be retrieved.
+~~5. BuiltIns are not complete, meaning not all functions can be retrieved.~~ Updated (maybe?)
 6. Loops are also not present. (discovered: while .. do)
 
 
