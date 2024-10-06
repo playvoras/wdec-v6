@@ -59,7 +59,9 @@ This is for learning and educational purposes only.
 
 # Comparison
 
-Oracle: ```lua
+Oracle: 
+```lua
+
 local v0 = {
     Lobby = 6516141723, 
     LobbyVoice = 12308344607, 
@@ -83,11 +85,14 @@ if game["Run Service"]:IsStudio() then
     v0.Lobby = game.PlaceId;
     print("\226\154\160\239\184\143\226\154\160\239\184\143\226\154\160\239\184\143" .. "[" .. 1 .. "]" .. " FORCED MODE TO " .. "Lobby" .. ". CHANGE IN REPLICATEDFIRST > GETPLACEID!");
 end;
-return v0;```
+return v0;
+```
 
 
 
-wdec: ```lua
+wdec:
+```lua
+
 --Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)
 --Time Taken: 0.0023953914642333984
 local v0 = {}
@@ -114,4 +119,5 @@ if v2_IsStudio_ret1 then
     local v5 = "âš ï¸âš ï¸âš ï¸"
     print(v5 .. "[" .. 1 .. "]" .. " FORCED MODE TO " .. "Lobby" .. ". CHANGE IN REPLICATEDFIRST > GETPLACEID!")
 end
-return v0```
+return v0
+```
