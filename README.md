@@ -50,3 +50,9 @@ There are multiple flaws with this decompiler:
 Fiu: ReadVarInt Function and debug stuff
 
 Luau: Deserializer
+
+# Advice
+
+If you have money and you are willing to get a paid decompiler, buy oracle: discord.gg/decompiler
+
+This is for learning and educational purposes only.
