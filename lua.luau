@@ -5,7 +5,7 @@
     written by luavm on discord
 ]]
 
---// Decompiler fixed by @luaubc on Discord.
+--// Decompiler fixed by @legalcarbomb on Discord.
 --@return string
 
 -- // This was fixed using Fiu (Decompiler still has a lot of flaws.)
@@ -3230,7 +3230,7 @@ else
 end
 ]]
 function decompile(script: LocalScript | ModuleScript)
-	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)\n'
+	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @legalcarbomb (still needs tweaking)\n'
 	local _, bytecode = pcall(getscriptbytecode, script)
 	assert(_, 'Failed to retrieve bytecode from script: ' .. script.Name .. '\n\n Cause: ' .. bytecode)
 	local _, deserialized = pcall(deserialize, bytecode, true)
@@ -3240,7 +3240,7 @@ end
 local env = (getgenv and getgenv()) or (getfenv and getfenv()) or shared or _G
 env.decompile = decompile
 function bytecode_decompile(bytecode)
-	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)\n'
+	local CreditHeader = '--Decompiled with wdec // Made by @luavm // fixed by @legalcarbomb (still needs tweaking)\n'
 	--//assert(_, 'Failed to retrieve bytecode from script: ' .. script .. '\n\n Cause: ' .. bytecode)
 	local _, deserialized = pcall(deserialize, bytecode, false)
 	local result, timeTaken = wdec_decompile(deserialized)
