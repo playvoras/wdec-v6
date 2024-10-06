@@ -38,6 +38,8 @@ There are multiple flaws with this decompiler:
 
 6. Instead of having else or elseif, the decompiler registers it as another statement so TODO: add reasonable else amnd elseif
 
+7. The AST is somewhat broken due to not good handling (meaning the script won't be decompiled)
+
 
 # Credits
 
