@@ -56,3 +56,62 @@ Luau: Deserializer
 If you have money and you are willing to get a paid decompiler, buy oracle: discord.gg/decompiler
 
 This is for learning and educational purposes only.
+
+# Comparison
+
+Oracle: ```lua
+local v0 = {
+    Lobby = 6516141723, 
+    LobbyVoice = 12308344607, 
+    Game = 6839171747, 
+    Intermission = 10549820578, 
+    Fools = 10549820578
+};
+if game.GameId == 3833818265 then
+    v0 = {
+        Lobby = 10548891534, 
+        LobbyVoice = 11669468511, 
+        Game = 10549003388, 
+        Intermission = 10549005830, 
+        Fools = 10549005830
+    };
+end;
+if game["Run Service"]:IsStudio() then
+    for v1, _ in v0 do
+        v0[v1] = nil;
+    end;
+    v0.Lobby = game.PlaceId;
+    print("\226\154\160\239\184\143\226\154\160\239\184\143\226\154\160\239\184\143" .. "[" .. 1 .. "]" .. " FORCED MODE TO " .. "Lobby" .. ". CHANGE IN REPLICATEDFIRST > GETPLACEID!");
+end;
+return v0;```
+
+
+
+wdec: ```lua
+--Decompiled with wdec // Made by @luavm // fixed by @luaubc (still needs tweaking)
+--Time Taken: 0.0023953914642333984
+local v0 = {}
+v0.Lobby = 6516141723
+v0.LobbyVoice = 12308344607
+v0.Game = 6839171747
+v0.Intermission = 10549820578
+v0.Fools = 10549820578
+if game.GameId ~= 3833818265 then
+    local v1 = {}
+    v1.Lobby = 10548891534
+    v1.LobbyVoice = 11669468511
+    v1.Game = 10549003388
+    v1.Intermission = 10549005830
+    v1.Fools = 10549005830
+    v0 = v1
+end
+local v2_IsStudio_ret1 = game["Run Service"]:IsStudio()
+if v2_IsStudio_ret1 then
+    for v3, v4 in v0, nil do
+        v0[v3] = nil
+    end
+    v0.Lobby = game.PlaceId
+    local v5 = "âš ï¸âš ï¸âš ï¸"
+    print(v5 .. "[" .. 1 .. "]" .. " FORCED MODE TO " .. "Lobby" .. ". CHANGE IN REPLICATEDFIRST > GETPLACEID!")
+end
+return v0```
