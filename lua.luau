@@ -779,109 +779,109 @@ type BuiltInFunction = {
 	Path: { string }
 }
 
-local builtins: { BuiltInFunction } = { -- ORDER SENSITIVE
-	{ Path = { "assert" }},
-	-- math
-	{ Path = { "math", "abs" }},
-	{ Path = { "math", "acos" }},
-	{ Path = { "math", "asin" }},
-	{ Path = { "math", "atan2" }},
-	{ Path = { "math", "atan" }},
-	{ Path = { "math", "ceil" }},
-	{ Path = { "math", "cosh" }},
-	{ Path = { "math", "cos" }},
-	{ Path = { "math", "deg" }},
-	{ Path = { "math", "exp" }},
-	{ Path = { "math", "floor" }},
-	{ Path = { "math", "fmod" }},
-	{ Path = { "math", "frexp" }},
-	{ Path = { "math", "ldexp" }},
-	{ Path = { "math", "log10" }},
-	{ Path = { "math", "log" }},
-	{ Path = { "math", "max" }},
-	{ Path = { "math", "min" }},
-	{ Path = { "math", "modf" }},
-	{ Path = { "math", "pow" }},
-	{ Path = { "math", "rad" }},
-	{ Path = { "math", "sinh" }},
-	{ Path = { "math", "sin" }},
-	{ Path = { "math", "sqrt" }},
-	{ Path = { "math", "tanh" }},
-	{ Path = { "math", "tan" }},
-	-- bit32
-	{ Path = { "bit32", "arshift" }},
-	{ Path = { "bit32", "band" }},
-	{ Path = { "bit32", "bnot" }},
-	{ Path = { "bit32", "bor" }},
-	{ Path = { "bit32", "bxor" }},
-	{ Path = { "bit32", "btest" }},
-	{ Path = { "bit32", "extract" }},
-	{ Path = { "bit32", "lrotate" }},
-	{ Path = { "bit32", "lshift" }},
-	{ Path = { "bit32", "replace" }},
-	{ Path = { "bit32", "rrotate" }},
-	{ Path = { "bit32", "rshift" }},
+local builtins = {
+    { Path = { "assert" } },
+    { Path = { "type" } },
+    { Path = { "typeof" } },
+    { Path = { "rawset" } },
+    { Path = { "rawget" } },
+    { Path = { "rawequal" } },
+    { Path = { "rawlen" } },
+    { Path = { "unpack" } },
+    { Path = { "select" } },
+    { Path = { "getmetatable" } },
+    { Path = { "setmetatable" } },
+    
+    -- math functions
+    { Path = { "math", "abs" } },
+    { Path = { "math", "acos" } },
+    { Path = { "math", "asin" } },
+    { Path = { "math", "atan2" } },
+    { Path = { "math", "atan" } },
+    { Path = { "math", "ceil" } },
+    { Path = { "math", "cosh" } },
+    { Path = { "math", "cos" } },
+    { Path = { "math", "deg" } },
+    { Path = { "math", "exp" } },
+    { Path = { "math", "floor" } },
+    { Path = { "math", "fmod" } },
+    { Path = { "math", "frexp" } },
+    { Path = { "math", "ldexp" } },
+    { Path = { "math", "log10" } },
+    { Path = { "math", "log" } },
+    { Path = { "math", "max" } },
+    { Path = { "math", "min" } },
+    { Path = { "math", "modf" } },
+    { Path = { "math", "pow" } },
+    { Path = { "math", "rad" } },
+    { Path = { "math", "sinh" } },
+    { Path = { "math", "sin" } },
+    { Path = { "math", "sqrt" } },
+    { Path = { "math", "tanh" } },
+    { Path = { "math", "tan" } },
+    { Path = { "math", "clamp" } },
+    { Path = { "math", "sign" } },
+    { Path = { "math", "round" } },
+    { Path = { "math", "lerp" } },
 
-	{ Path = { "type" }},
+    -- bit32 functions
+    { Path = { "bit32", "arshift" } },
+    { Path = { "bit32", "band" } },
+    { Path = { "bit32", "bnot" } },
+    { Path = { "bit32", "bor" } },
+    { Path = { "bit32", "bxor" } },
+    { Path = { "bit32", "btest" } },
+    { Path = { "bit32", "extract" } },
+    { Path = { "bit32", "lrotate" } },
+    { Path = { "bit32", "lshift" } },
+    { Path = { "bit32", "replace" } },
+    { Path = { "bit32", "rrotate" } },
+    { Path = { "bit32", "rshift" } },
+    { Path = { "bit32", "countlz" } },
+    { Path = { "bit32", "countrz" } },
+    { Path = { "bit32", "byteswap" } },
 
-	-- string
-	{ Path = { "string", "byte" }},
-	{ Path = { "string", "char" }},
-	{ Path = { "string", "len" }},
+    -- string functions
+    { Path = { "string", "byte" } },
+    { Path = { "string", "char" } },
+    { Path = { "string", "len" } },
+    { Path = { "string", "sub" } },
 
-	{ Path = { "typeof" }},
+    -- table functions
+    { Path = { "table", "insert" } },
+    { Path = { "table", "unpack" } },
 
-	-- string
-	{ Path = { "string", "sub" }},
+    -- buffer functions
+    { Path = { "buffer", "readi8" } },
+    { Path = { "buffer", "readu8" } },
+    { Path = { "buffer", "writei8" } },
+    { Path = { "buffer", "writeu8" } },
+    { Path = { "buffer", "readi16" } },
+    { Path = { "buffer", "readu16" } },
+    { Path = { "buffer", "writei16" } },
+    { Path = { "buffer", "writeu16" } },
+    { Path = { "buffer", "readi32" } },
+    { Path = { "buffer", "readu32" } },
+    { Path = { "buffer", "writei32" } },
+    { Path = { "buffer", "writeu32" } },
+    { Path = { "buffer", "readf32" } },
+    { Path = { "buffer", "writef32" } },
+    { Path = { "buffer", "readf64" } },
+    { Path = { "buffer", "writef64" } },
 
-	-- math
-	{ Path = { "math", "clamp" }},
-	{ Path = { "math", "sign" }},
-	{ Path = { "math", "round" }},
-
-	-- raw*
-	{ Path = { "rawset" }},
-	{ Path = { "rawget" }},
-	{ Path = { "rawequal" }},
-
-	-- table
-	{ Path = { "table", "insert" }},
-	{ Path = { "table", "unpack" }},
-
-	-- vector constructor
-	{ Path = { "Vector3", "new" }},
-
-	-- bit32.count
-	{ Path = { "bit32", "countlz" }},
-	{ Path = { "bit32", "countrz" }},
-
-	-- select(_, ...)
-	{ Path = { "select" }},
-
-	{ Path = { "rawlen" }},
-
-	{ Path = { "bit32", "extract" }},
-
-	{ Path = { "getmetatable" }},
-	{ Path = { "setmetatable" }},
-
-	{ Path = { "tonumber" }},
-	{ Path = { "tostring" }},
-	-- bit32.byteswap(n)
-	{ Path = { "bit32", "byteswap" }},
-	-- buffer
-	{ Path = { "buffer", "readi8" }},
-	{ Path = { "buffer", "readu8" }},
-	{ Path = { "buffer", "writeu8" }},
-	{ Path = { "buffer", "readi16" }},
-	{ Path = { "buffer", "readu16" }},
-	{ Path = { "buffer", "writeu16" }},
-	{ Path = { "buffer", "readi32" }},
-	{ Path = { "buffer", "readu32" }},
-	{ Path = { "buffer", "writeu32" }},
-	{ Path = { "buffer", "readf32" }},
-	{ Path = { "buffer", "writef64" }},
-	{ Path = { "buffer", "readf64" }},
+    -- vector functions
+    { Path = { "vector", "create" } },
+    { Path = { "vector", "magnitude" } },
+    { Path = { "vector", "normalize" } },
+    { Path = { "vector", "cross" } },
+    { Path = { "vector", "dot" } },
+    { Path = { "vector", "floor" } },
+    { Path = { "vector", "ceil" } },
+    { Path = { "vector", "abs" } },
+    { Path = { "vector", "sign" } },
+    { Path = { "vector", "clamp" } },
+    { Path = { "vector", "min" } },
+    { Path = { "vector", "max" } }
 }
 
 local function ConvertBuiltin(id: number): GlobalNode | TableIndexNode
