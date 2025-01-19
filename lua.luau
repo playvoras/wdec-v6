@@ -896,21 +896,7 @@ end
 local function wdec_decompile(bytecode: luau_bytecode): string
 	local start_time = tick()
 	local function ReAssigns(instruction: luau_instruction, target: number): boolean -- Function to check if target register `target` is written to by `instruction`
-		if not table.find({ -- Below is a list of instructions which can possibly write to a register
-			-- TODO: finish this list; it fucks up shit if it isn't
-			"GETGLOBAL", "GETUPVAL", "NEWCLOSURE",
-			"ADD", "SUB", "MUL", "DIV", "ADDK",
-			"SUBK", "MULK", "DIVK", "MOD", "POW",
-			"MODK", "POWK", "AND", "OR", "ANDK",
-			"ORK", "CONCAT", "NOT", "MINUS", "LENGTH",
-			"NEWTABLE", "DUPTABLE", "GETVARARGS",
-			"LOADKX", "IDIV", "IDIVK", "LOADN",
-			"LOADK", "LOADB", "MOVE", "LOADNIL",
-			"DUPCLOSURE", "CALL", "SETLIST",
-			"FORNPREP", "GETTABLEKS"
-			}, instruction.name) then
-			return false -- return false if the instruction doesn't write (JUMP, etc)
-		end
+		if not table.find({"GETGLOBAL" or "GETUPVAL" or "NEWCLOSURE" or "ADD" or "SUB" or "MUL" or "DIV" or "ADDK" or "SUBK" or "MULK" or "DIVK" or "MOD" or "POW" or "MODK" or "POWK" or "AND" or "OR" or "ANDK" or "ORK" or "CONCAT" or "NOT" or "MINUS" or "LENGTH" or "NEWTABLE" or "DUPTABLE" or "GETVARARGS" or "LOADKX" or "IDIV" or "IDIVK" or "LOADN" or "LOADK" or "LOADB" or "MOVE" or "LOADNIL" or "DUPCLOSURE" or "CALL" or "SETLIST" or "FORNPREP" or "GETTABLEKS"}, instruction.name) then return false end
 		if instruction.name == "CALL" then
 			return instruction.c - 1 > 0 and target >= instruction.a and target <= instruction.a + instruction.c - 1
 		end
